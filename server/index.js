@@ -6,9 +6,11 @@ import dotenv from 'dotenv'
 import multer  from 'multer';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import authRoutes from  './routes/auth.js'
 import path from 'path';
 import {fileURLToPath} from 'url';
 import  {register} from "./controllers/auth.js";
+import { verifyToken } from './middleware/auth.js';
 
 
 /* cofigurations */
@@ -37,7 +39,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage});
 /*ROUTE WITH FILES*/
-app.post("/auth/register",upload.single("picture"),register)
+app.post("/auth/register",upload.single("picture"), verifyToken, register);
+app.use("/auth",authRoutes);
 
 // we gonna upload picture locally;
 

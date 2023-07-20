@@ -8,6 +8,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
 import {fileURLToPath} from 'url';
+import  {register} from "./controllers/auth.js";
 
 
 /* cofigurations */
@@ -28,16 +29,24 @@ app.use(cors());
 // allow or restrict access to the application from different origins.
 app.use('/assets',express.static(path.join(__dirname,'public/assets')));
 
-const strorage = multer.diskStorage({
+const storage = multer.diskStorage({
     destination : function (req,file,cb) {
         cb(null,file.originalname)
     }
 })
 
+const upload = multer({storage});
+/*ROUTE WITH FILES*/
+app.post("/auth/register",upload.single("picture"),register)
+
+// we gonna upload picture locally;
+
+
+
 // handling file uploads using multer
 
 const PORT = process.env.PORT || 6001;
-mongoose.connect("mongodb://127.0.0.1:27017/chat-app" , {
+mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {
@@ -47,4 +56,4 @@ mongoose.connect("mongodb://127.0.0.1:27017/chat-app" , {
 })
 .catch((error) => {
     console.log(`${error} did not connect`)
-})
+});

@@ -13,14 +13,14 @@ import {fileURLToPath} from 'url';
 /* cofigurations */
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname =  path.__dirname(__filename);
+const __dirname =  path.dirname(__filename);
 dotenv.config();
 
 const app = express();
 
 app.use(express.json());
 app.use(helmet());
-app.use(helmet.crossOriginEmbedderPolicy({policy: "cross-origin"}))
+app.use(helmet.crossOriginEmbedderPolicy()); 
 // control the embedding of the current document across different origins.
 app.use(morgan("common"));
 app.use(bodyParser.json({limit: "30mb",extended:true}));
@@ -35,3 +35,16 @@ const strorage = multer.diskStorage({
 })
 
 // handling file uploads using multer
+
+const PORT = process.env.PORT || 6001;
+mongoose.connect("mongodb://127.0.0.1:27017/chat-app" , {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+}).then(() => {
+    app.listen(PORT , () => {
+        console.log(`Server is running on the ${PORT}`);
+    })
+})
+.catch((error) => {
+    console.log(`${error} did not connect`)
+})

@@ -1,5 +1,3 @@
-// import { colors } from "@mui/material";
-
 export const colorTokens = {
     grey: {
       0: "#FFFFFF",
@@ -34,10 +32,13 @@ export const colorTokens = {
 
 
 export const themeSetting = (mode) => {
+    console.log('mode:', mode);
+    console.log('colorTokens:', colorTokens);
     return {
         palette : {
             mode: mode,
-            ...(mode=== "dark" ? {
+            ...(mode=== "dark" ? 
+            {
                 //paletter values for dark mode
                 primary: {
                     dark: colorTokens.primary[200],
@@ -55,7 +56,8 @@ export const themeSetting = (mode) => {
                     default: colorTokens.grey[900],
                     alt: colorTokens.grey[800]
                 }
-            }: {
+            }
+            :{
 
                 primary: {
                     dark: colorTokens.primary[700],

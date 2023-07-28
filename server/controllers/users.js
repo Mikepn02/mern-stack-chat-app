@@ -27,8 +27,8 @@ export const getUserFriends =  async(req,res) => {
     ); 
     //we gonna make  multiple calls to the database that why we used promise
 
-    const formattedFriend = friends.map(({_id,firstName,lastName,occupationm,location,picturePath}) => {
-        return {_id,firstName,lastName,occupationm,location,picturePath};
+    const formattedFriend = friends.map(({_id,firstName,lastName,occupation,location,picturePath}) => {
+        return {_id,firstName,lastName,occupation,location,picturePath};
     })
     res.status(200).json(formattedFriend)
   }catch(err) {

@@ -16,6 +16,7 @@ import userRoutes  from './routes/users.js';
 import User from  './models/User.js';
 import Post from './models/post.js';
 import {users , posts } from './data/index.js'
+import { log } from 'console';
 
 
 /* cofigurations */
@@ -32,19 +33,26 @@ app.use(helmet.crossOriginEmbedderPolicy());
 // control the embedding of the current document across different origins.
 app.use(morgan("common"));
 app.use(bodyParser.json({limit: "30mb",extended:true}));
+app.use(bodyParser.urlencoded({limit:"30mb" ,extended: true}))
 app.use(cors());
 // allow or restrict access to the application from different origins.
 app.use('/assets',express.static(path.join(__dirname,'public/assets')));
 
 const storage = multer.diskStorage({
-    destination : function (req,file,cb) {
-        cb(null,file.originalname)
-    }
-})
+    destination: function (req, file, cb) {
+      cb(null, "public/assets");
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname);
+    },
+  });
+  const upload = multer({ storage });
 
-const upload = multer({storage});
+
+
 /*ROUTE WITH FILES*/
 app.post("/auth/register",upload.single("picture"), register);
+app.post("/posts",  upload.single("picture"), createPost);
 app.use("/auth",authRoutes);
 app.use('/users',userRoutes)
 

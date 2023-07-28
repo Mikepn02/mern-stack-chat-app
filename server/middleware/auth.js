@@ -1,11 +1,11 @@
-import jwt from  'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 export const verifyToken = async (req,res,next) => {
     try {
        let token = req.header("Authorization");
 
        if(!token) {
-        return res.status(403).send("Access Denied");
+        return res.status(403).send("Access Denied , Please sign in or sign up to get the user");
        }
     //    that is sent from frontend
        if(token.startWith("Bearer ")){

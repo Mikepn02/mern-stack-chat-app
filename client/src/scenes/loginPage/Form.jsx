@@ -256,7 +256,7 @@ const Form = () => {
               "&:hover" : {
                 cursor: "pointer",
                 color:palette.primary.light
-              }
+              }                                           
             }}
             >{isLogin ? "Don't have an account? sign up here" : "Already have any account?Loing here" }</Typography>
           </Box>

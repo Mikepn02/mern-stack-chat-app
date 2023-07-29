@@ -58,6 +58,7 @@ export const addRemoveFriend = async(req,res) => {
         const friends = await Promise.all(
             user.friends.map((id) => User.findById(id))
         ); 
+        // the code uses Promise.all to fetch the complete User objects of all the friends in the user's friends list. 
         //we gonna make  multiple calls to the database that why we used promise
     
         const formattedFriend = friends.map(({_id,firstName,lastName,occupationm,location,picturePath}) => {

@@ -10,9 +10,11 @@ import authRoutes from  './routes/auth.js'
 import path from 'path';
 import {fileURLToPath} from 'url';
 import  {register} from "./controllers/auth.js";
-import {createPost} from './controllers/posts.js'
+import {createPost, likePost} from './controllers/posts.js'
 import { verifyToken } from './middleware/auth.js';
 import userRoutes  from './routes/users.js';
+import postRoutes from './routes/post.js'
+import { getFeedPost } from './controllers/posts.js';
 import User from  './models/User.js';
 import Post from './models/post.js';
 import {users , posts } from './data/index.js'
@@ -29,10 +31,6 @@ const app = express();
 
 app.use(express.json());
 app.use(helmet());
-app.use(helmet.crossOriginEmbedderPolicy()); 
-app.use(helmet({
-  crossOriginResourcePolicy: false
-}))
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 // control the embedding of the current document across different origins.
 app.use(morgan("common"));
@@ -56,9 +54,11 @@ const storage = multer.diskStorage({
 
 /*ROUTE WITH FILES*/
 app.post("/auth/register",upload.single("picture"), register);
-app.post("/posts", upload.single("picture"), createPost);
+app.post("/posts", verifyToken, upload.single("picture"), createPost);
+app.use("/posts/all",getFeedPost)
 app.use("/auth",authRoutes);
 app.use('/users',userRoutes)
+app.use('/posts',postRoutes)
 
 // we gonna upload picture locally;
 

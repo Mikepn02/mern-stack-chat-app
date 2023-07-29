@@ -14,7 +14,7 @@ const FriendListWidget = ({ userId }) => {
     const getFriends = async () => {
         const response = await fetch(`http://localhost:3001/users/${userId}/friends`, {
             method: 'GET',
-            headers: { Authorization: `Bearrr ${token}` }
+            headers: { Authorization: `Bearer ${token}` }
         });
         const data = await response.json();
         dispatch(setFriends(data));
@@ -22,6 +22,8 @@ const FriendListWidget = ({ userId }) => {
     useEffect(() => {
         getFriends();
     }, []);
+
+
 
     return (
         <WidgetWrapper>
@@ -32,17 +34,15 @@ const FriendListWidget = ({ userId }) => {
                 sx={{ mb: "1.5rem" }}
             >Friend List</Typography>
             <Box display="flex" flexDirection="column" gap="1.5rem">
-                {Array.isArray(friends) &&
-                    friends.map((friend) => (
-                        <Friend
-                            key={friend._id}
-                            friendId={`${friend.firstName} ${friend.lastName}`}
-                            subtitle={friend.occupation}
-                            userPicturePath={friend.userPicturePath}
-                        />
-                    ))}
-
-                
+            {Array.isArray(friends) && friends.map((friend) => (
+        <Friend
+          key={friend._id}
+          friendId={friend._id}
+          name={`${friend.firstName} ${friend.lastName}`}
+          subtitle={friend.occupation}
+          userPicturePath={friend.picturePath}
+        />
+      ))}
             </Box>
         </WidgetWrapper>
     )

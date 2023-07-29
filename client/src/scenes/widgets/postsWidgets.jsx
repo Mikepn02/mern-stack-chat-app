@@ -10,7 +10,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
 
   const getPosts = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/posts`, {
+      const response = await fetch(`http://localhost:3001/posts/all`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${token}` }
       });

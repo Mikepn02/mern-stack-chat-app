@@ -26,7 +26,7 @@ const PostWidget = ({
     description,
     location,
     picturePath,
-    usePicturePath,
+    userPicturePath,
     likes,
     comments,
 }) => {
@@ -34,15 +34,14 @@ const PostWidget = ({
     const dispatch = useDispatch();
     const token = useSelector((state) => state.token);
     const loggedInUserId = useSelector((state) => state.user._id);
-    const isLiked = likes[loggedInUserId] || false;
+    const isLiked = Boolean(likes[loggedInUserId]);
     const likeCount = Object.keys(likes).length // this is to  increase the number of likes
     const { palette } = useTheme();
-    const primaryLight = palette.primary.light;
-    const primaryDark = palette.primary.dark
     const main = palette.neutral.main;
     const primary = palette.primary.main;
 
     const patchLike = async () => {
+        console.log(postId)
         const response = await fetch(`http://localhost:3001/posts/${postId}/like`, {
             method: 'PATCH',
             headers: {
@@ -53,7 +52,7 @@ const PostWidget = ({
         })
         const updatedPost = await response.json();
         dispatch(setPost({ post: updatedPost }))
-    }
+    } 
 
     return (
         <WidgetWrapper m="2rem 0">
@@ -61,7 +60,7 @@ const PostWidget = ({
                 friendId={postUserId}
                 name={name}
                 subtitle={location}
-                userPicturePath={usePicturePath}
+                userPicturePath={userPicturePath}
             />
             <Typography color={main} sx={{ mt: "1rem" }}>{description}</Typography>
             {picturePath && (

@@ -46,3 +46,5 @@ root.render(
 
 // This practice is mainly because of how React and the virtual DOM work. this why we pass app and states in index.js
 //persist used to preserve data while page is reloaded
+// To use these hooks, make sure you have set up your Redux store using the createStore function 
+// from the redux library and wrapped your application with the Provider component from react-redux.

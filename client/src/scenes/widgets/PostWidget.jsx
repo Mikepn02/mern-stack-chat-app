@@ -34,7 +34,7 @@ const PostWidget = ({
     const dispatch = useDispatch();
     const token = useSelector((state) => state.token);
     const loggedInUserId = useSelector((state) => state.user._id);
-    const isLiked = Boolean(likes(loggedInUserId));
+    const isLiked = likes[loggedInUserId] || false;
     const likeCount = Object.keys(likes).length // this is to  increase the number of likes
     const { palette } = useTheme();
     const primaryLight = palette.primary.light;
@@ -67,6 +67,7 @@ const PostWidget = ({
             {picturePath && (
                 <img
                     width="100%"
+                    crossOrigin="anonymous"
                     height="auto"
                     alt="post"
                     style={{ borderRadius: "o.75rem", marginTop: "0.75rem" }}

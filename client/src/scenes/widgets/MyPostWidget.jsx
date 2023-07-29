@@ -5,8 +5,7 @@ import {
      GifBoxOutlined,
      MicOutlined,
      MoreHorizOutlined,
-     ImageOutlined,
-     GifBoxTwoTone
+     ImageOutlined
  } from "@mui/icons-material";
 import { 
     Box,

@@ -9,6 +9,7 @@ import { themeSettings } from './theme';
 import { createTheme } from '@mui/material/styles';
 import {CssBaseline,ThemeProvider} from '@mui/material';
 import  DataFetchingComponent from './scenes/fetch'
+import Increment from './count';
 
 
 
@@ -35,6 +36,7 @@ function App() {
         <CssBaseline />
        <Routes>
           <Route path="/"  element={<LoginPage />}/>
+          <Route path="/count"  element={<Increment />}/>
           <Route path='/fetch' element={<DataFetchingComponent />} />
           <Route path="/home"  element={isAuth ?<HomePage /> : <Navigate to="/" />}/>
           <Route path="/profile/:userId"  element={isAuth ?<ProfilePage />  : <Navigate to="/" />}/>

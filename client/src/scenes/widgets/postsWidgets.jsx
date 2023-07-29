@@ -9,15 +9,23 @@ const PostsWidget = ({ userId, isProfile = false }) => {
   const token = useSelector((state) => state.token);
 
   const getPosts = async () => {
-    const response = await fetch(`http://localhost:3001/posts`, {
-      method: 'GET',
-      headers: { Authorization: `Bearer ${token}` }
-    });
-
-    const data = await response.json(); // Await the response.json()
-    dispatch(setPosts({ posts: data }));
+    try {
+      const response = await fetch(`http://localhost:3001/posts`, {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+      const data = await response.json();
+      dispatch(setPosts({ posts: data }));
+    } catch (error) {
+      console.error('Error fetching posts:', error.message);
+    }
   };
-
+  
+  // Similarly, add error handling to the getUserPosts function
+  
   const getUserPosts = async () => {
     const response = await fetch(`http://localhost:3001/posts/${userId}/posts`, {
       method: 'GET',
@@ -36,43 +44,38 @@ const PostsWidget = ({ userId, isProfile = false }) => {
     }
   }, []); // eslint-disable-next-line react-hooks/exhaustive-deps
 
+
+
   return (
     <>
-    {Array.isArray(posts) ? 
-      (posts.map(
-        ({
-          _id,
-          userId,
-          firstName,
-          lastName,
-          description,
-          location,
-          picturePath,
-          userPicturePath,
-          likes,
-          comments,
-        }) => (
-          <PostWidget
-            key={_id}
-            postId={_id}
-            postUserId={userId}
-            name={`${firstName} ${lastName}`}
-            description={description}
-            location={location}
-            picturePath={picturePath}
-            userPicturePath={userPicturePath}
-            likes={likes}
-            comments={comments}
-          />
-        )
-      )
-    ): (
-        <p>No posts available</p>
-    )
-}
-      
+      {posts.map(({
+      _id,
+      userId,
+      firstName,
+      lastName,
+      description,
+      location,
+      picturePath,
+      userPicturePath,
+      likes,
+      comments,
+     }) => (
+      <PostWidget
+      key={_id}
+      postId={_id}
+      postUserId={userId}
+      name={`${firstName} ${lastName}`}
+      description={description}
+      location={location}
+      picturePath={picturePath}
+      userPicturePath={userPicturePath}
+      likes={likes}
+      comments={comments}
+    />
+     ))}
     </>
-  );
+       
+  )
 };
 
 export default PostsWidget;

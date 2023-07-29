@@ -16,7 +16,7 @@ import userRoutes  from './routes/users.js';
 import User from  './models/User.js';
 import Post from './models/post.js';
 import {users , posts } from './data/index.js'
-import { log } from 'console';
+
 
 
 /* cofigurations */
@@ -30,6 +30,10 @@ const app = express();
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginEmbedderPolicy()); 
+app.use(helmet({
+  crossOriginResourcePolicy: false
+}))
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 // control the embedding of the current document across different origins.
 app.use(morgan("common"));
 app.use(bodyParser.json({limit: "30mb",extended:true}));
@@ -52,7 +56,7 @@ const storage = multer.diskStorage({
 
 /*ROUTE WITH FILES*/
 app.post("/auth/register",upload.single("picture"), register);
-app.post("/posts", verifyToken, upload.single("picture"), createPost);
+app.post("/posts", upload.single("picture"), createPost);
 app.use("/auth",authRoutes);
 app.use('/users',userRoutes)
 

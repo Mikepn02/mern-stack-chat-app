@@ -22,14 +22,13 @@ const Friend = ({friendId , name , subtitle , userPicturePath}) => {
     const {_id} = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
     const friends = useSelector((state) => state.user.friends);
-    // const friends = ["nzabera","celine","pierrine"]
 
     const {palette} = useTheme();
     const primaryLight = palette.primary.light;
     const primaryDark  = palette.primary.dark
     const main = palette.neutral.main;
     const medium = palette.neutral.medium
-    const isFriend = Array.isArray(friends) ? friends.find((friend) => friend._id === friendId) : null;
+    const isFriend = Array.isArray(friends) ? friends.find((friend) => friend._id === friendId) : 0;
     const patchFriend = async() => {
         const response = await fetch(`http://localhost:3001/users/${_id}/${friendId}`,{
             method:'PATCH',
@@ -48,7 +47,8 @@ const Friend = ({friendId , name , subtitle , userPicturePath}) => {
                  <Box 
                  onClick={() => {
                     navigate(`/profile/${friendId}`);
-                    navigate(0); // thos for refreshing the page
+                    // navigate(0); // thos for refreshing the page
+                    window.location.reload()
                 
                 }}
                  >
@@ -67,7 +67,7 @@ const Friend = ({friendId , name , subtitle , userPicturePath}) => {
                  </Box>
             </FlexBetween>
             <IconButton 
-            onClick={() => patchFriend()}
+            onClick={patchFriend}
             sx={{backgroundColor: primaryLight,p:"0.6rem"}}
             >{isFriend ? (
                 <PersonRemoveOutlined sx={{color:primaryDark}} />

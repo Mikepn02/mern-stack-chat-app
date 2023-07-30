@@ -38,7 +38,9 @@ export const register = async(req,res) => {
     }) ;
     
     const savedUser = await newUser.save()
-    res.status(201).json(savedUser)
+    res.status(201).json({
+        message:"successfully added the user"
+    })
 
     }catch(err) {
        res.status(500).json({

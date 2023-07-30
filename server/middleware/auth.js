@@ -8,8 +8,8 @@ export const verifyToken = async (req,res,next) => {
         return res.status(403).send("Access Denied , Please sign in or sign up to get the user");
        }
     //    that is sent from frontend
-       if(token.startWith("Bearer ")){
-        token = token.slice(7,tokens.length).trimLeft();
+       if(token.startsWith("Bearer ")){
+        token = token.slice(7,token.length).trimLeft();
         // slice is used to get substring starting from index 7 and trim left method is then used to remove any leading whitespace characters that might be present after removing the prefix. 
        }
        // The "Bearer" scheme is used to identify the type of token being used for authentication.

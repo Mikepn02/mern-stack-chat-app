@@ -41,7 +41,6 @@ const PostWidget = ({
     const primary = palette.primary.main;
 
     const patchLike = async () => {
-        console.log(postId)
         const response = await fetch(`http://localhost:3001/posts/${postId}/like`, {
             method: 'PATCH',
             headers: {
@@ -52,7 +51,7 @@ const PostWidget = ({
         })
         const updatedPost = await response.json();
         dispatch(setPost({ post: updatedPost }))
-    } 
+    }
 
     return (
         <WidgetWrapper m="2rem 0">
@@ -86,7 +85,7 @@ const PostWidget = ({
                         <Typography>{likeCount}</Typography>
                     </FlexBetween>
                     <FlexBetween gap="0.3rem">
-                    <IconButton onClick={() => setIsComments()}>
+                    <IconButton onClick={() => setIsComments(!isComments)}>
                             <ChatBubbleOutlineOutlined />
                         </IconButton>
                         <Typography>{comments.length}</Typography>

@@ -3,11 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
    mode: "light",
-   user: {
-    friends: []
-   },
+   user:null,
    token: null,
    posts : [],
+
 }
 
 export const  authSlice = createSlice({
